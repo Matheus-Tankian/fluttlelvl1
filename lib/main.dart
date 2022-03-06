@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttlelvl1/todoList/home.dart';
+import 'package:fluttlelvl1/rotas/onePage.dart';
+import 'package:fluttlelvl1/rotas/towPage.dart';
+//import 'package:fluttlelvl1/todoList/home.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +19,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const Home(),
+      // home: const Home(),
+      initialRoute: '/onePage',
+
+      routes: {
+        '/onePage': (_) => const OnePage(),
+        '/twoPage': (_) => const TwoPage(),
+      },
     );
   }
 }
