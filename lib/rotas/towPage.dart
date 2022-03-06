@@ -15,7 +15,11 @@ class TwoPage extends StatelessWidget {
           Center(
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).pop("Retorno");
+                if (Navigator.of(context).canPop()) {
+                  Navigator.of(context).pop("Retorno");
+                } //verifica se pode voltar para a pagina anterior
+
+                //Navigator.of(context).pop("Retorno");//pra retorna pra a anterior
               },
               child: Text(
                 "Pagina dois $args",

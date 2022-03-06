@@ -14,7 +14,7 @@ class OnePage extends StatelessWidget {
             child: ElevatedButton(
                 onPressed: () {
                   Navigator.of(context)
-                      //.pushNamed('/twoPage', arguments: "teste")
+                      //.pushNamed('/twoPage', arguments: "teste")//chamar outra tela
                       .pushReplacementNamed('/twoPage',
                           arguments:
                               "teste") //colocar por cima e remover a anterior
