@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttlelvl1/gerenciamento_de_estado/pagina_um.dart';
 import 'package:fluttlelvl1/rotas/onePage.dart';
 import 'package:fluttlelvl1/rotas/towPage.dart';
 //import 'package:fluttlelvl1/todoList/home.dart';
@@ -19,13 +20,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      // home: const Home(),
-      initialRoute: '/onePage',
+      home: const PaginaUm(),
+      // initialRoute: '/onePage',
 
-      routes: {
-        '/onePage': (_) => const OnePage(),
-        '/twoPage': (_) => const TwoPage(),
-      },
+      // routes: {
+      //   '/onePage': (_) => const OnePage(),
+      //   '/twoPage': (_) => const TwoPage(),
+      // },
     );
   }
 }
