@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttlelvl1/widgets/custom_buttom_widget.dart';
 
@@ -11,14 +12,13 @@ class PaginaUm extends StatefulWidget {
 }
 
 class _PaginaUmState extends State<PaginaUm> {
-  int valorAleatorio = 0;
+  ValueNotifier<int> valorAleatorio = ValueNotifier<int>(0);
 
   randon() async {
     for (int i = 0; i < 10; i++) {
       await Future.delayed(Duration(seconds: 1));
-      setState(() {
-        valorAleatorio = Random().nextInt(1000);
-      });
+
+      valorAleatorio.value = Random().nextInt(1000);
     }
   }
 
@@ -29,9 +29,12 @@ class _PaginaUmState extends State<PaginaUm> {
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "Valor eh: $valorAleatorio",
-            style: const TextStyle(fontSize: 20),
+          ValueListenableBuilder(
+            valueListenable: valorAleatorio,
+            builder: (_, value, __) => Text(
+              "Valor eh: $value",
+              style: const TextStyle(fontSize: 20),
+            ),
           ),
           const SizedBox(height: 10),
           CustomButtonWidget(
