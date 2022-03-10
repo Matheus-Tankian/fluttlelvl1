@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttlelvl1/consumo_api/post.dart';
+import 'package:fluttlelvl1/controllers/posts_controller.dart';
+import 'package:fluttlelvl1/controllers/randon_controler.dart';
 import 'package:fluttlelvl1/widgets/custom_buttom_widget.dart';
-import 'package:http/http.dart' as http;
 
 class PaginaUm extends StatefulWidget {
   const PaginaUm({Key? key}) : super(key: key);
@@ -15,34 +13,11 @@ class PaginaUm extends StatefulWidget {
 }
 
 class _PaginaUmState extends State<PaginaUm> {
-  ValueNotifier<int> valorAleatorio = ValueNotifier<int>(0);
-  ValueNotifier<List<Post>> valorApi = ValueNotifier<List<Post>>([]);
-  ValueNotifier<bool> inLoader = ValueNotifier<bool>(false);
+  //ter acesso ao controller api
 
-  randon() async {
-    for (int i = 0; i < 10; i++) {
-      await Future.delayed(const Duration(seconds: 1));
-
-      valorAleatorio.value = Random().nextInt(1000);
-    }
-  }
-
-  callAPI() async {
-    var client = http.Client();
-    try {
-      inLoader.value = true;
-      var response = await client.get(
-        Uri.parse('https://jsonplaceholder.typicode.com/posts'),
-      );
-      var decodedResponse = jsonDecode(response.body) as List;
-      valorApi.value = decodedResponse.map((e) => Post.fromJson(e)).toList();
-      //didatica
-      await Future.delayed(Duration(seconds: 2));
-    } finally {
-      client.close();
-      inLoader.value = false;
-    }
-  }
+  final PostController _controller = PostController();
+//ter acesso ao controller randon
+  final RandonControler _randonControler = RandonControler();
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +28,7 @@ class _PaginaUmState extends State<PaginaUm> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ValueListenableBuilder(
-              valueListenable: valorAleatorio,
+              valueListenable: _randonControler.valorAleatorio,
               builder: (_, value, __) => Text(
                 "Valor eh: $value",
                 style: const TextStyle(fontSize: 20),
@@ -62,28 +37,29 @@ class _PaginaUmState extends State<PaginaUm> {
             const SizedBox(height: 10),
             CustomButtonWidget(
               disable: false,
-              onPressed: () => randon(),
+              onPressed: () => _randonControler.randon(),
               title: "Custom BTN",
               titleSize: 18,
             ),
             const SizedBox(height: 10),
             AnimatedBuilder(
-              animation: Listenable.merge([valorApi, inLoader]),
-              builder: (_, __) => inLoader.value
+              animation: Listenable.merge(
+                  [_controller.valorApi, _controller.inLoader]),
+              builder: (_, __) => _controller.inLoader.value
                   ? CircularProgressIndicator()
                   : ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: valorApi.value.length,
+                      itemCount: _controller.valorApi.value.length,
                       itemBuilder: (_, index) => ListTile(
-                        title: Text(valorApi.value[index].title),
+                        title: Text(_controller.valorApi.value[index].title),
                       ),
                     ),
             ),
             const SizedBox(height: 10),
             CustomButtonWidget(
               disable: false,
-              onPressed: () => callAPI(),
+              onPressed: () => _controller.callAPI(),
               title: "Api BTN",
               titleSize: 18,
             ),

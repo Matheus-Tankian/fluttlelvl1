@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttlelvl1/gerenciamento_de_estado/pagina_um.dart';
-import 'package:fluttlelvl1/rotas/onePage.dart';
-import 'package:fluttlelvl1/rotas/towPage.dart';
+//import 'package:fluttlelvl1/gerenciamento_de_estado/pagina_um.dart';
+import 'package:fluttlelvl1/views/gerenciamento_de_estado/pagina_um.dart';
 //import 'package:fluttlelvl1/todoList/home.dart';
 
 void main() {
